@@ -12,6 +12,12 @@
     }
 }
 
+.ToggleWrapper {
+    white-space: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+}
+
 @media (min-width: 500px) {
     .Searchbar {
         flex-flow: row;

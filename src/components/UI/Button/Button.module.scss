@@ -1,8 +1,14 @@
 .Button {
     padding: 0.5rem;
     border-radius: 0 0.5rem 0.5rem 0;
+    display: inline-block;
     cursor: pointer;
     background-color: sandybrown;
     color: white;
     font-weight: bold;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+        background-color: orange;
+    }
 }

@@ -1,0 +1,14 @@
+import React from 'react';
+import classes from './ToggleCF.module.scss';
+
+const toggle = props => {
+
+    return (
+        <label className={classes.Switch}>
+            <input type="checkbox" />
+            <span className={`${classes.Slider} ${classes.Round}`}></span>
+        </label>
+    )
+};
+
+export default toggle;
