@@ -1,11 +1,26 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Logo from './Logo/Logo';
 import Input from './Input/Input';
 import ToggleCF from './ToggleCF/ToggleCF';
 import classes from './Searchbar.module.scss';
+import axios from 'axios';
 
-const searchbar = props => {
+const Searchbar = props => {
+    const [ search, setSearch ] = useState('');
+
+    const searchHandler = (event) => {
+        event.preventDefault();
+        axios.get(`https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${process.env.REACT_APP_WEATHER_API_KEY}`)
+            .then( res => {
+                // Code
+                console.log(res);
+            })
+            .catch( err => {
+                // Code
+                console.log(err);
+            });
+    };
 
     return (
         <ul className={classes.Searchbar}>
@@ -13,7 +28,14 @@ const searchbar = props => {
                 <Logo />
             </li>
             <li>
-                <Input />
+                <form onSubmit={searchHandler}>
+                    <Input
+                        type="text"
+                        value={search}
+                        placeholder="Enter your city..."
+                        onChange={event => setSearch(event.target.value)}
+                     />
+                </form>
             </li>
             <li>
                 <div className={classes.ToggleWrapper}>
@@ -24,4 +46,4 @@ const searchbar = props => {
     )
 };
 
-export default searchbar;
+export default Searchbar;
