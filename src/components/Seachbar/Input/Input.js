@@ -9,8 +9,8 @@ const input = props => {
             <div className={classes.InputWrapper}>
                 <input 
                     className={classes.Input}  
-                    placeholder={props.placeholder}
-                    type={props.text}
+                    placeholder="Enter your city..."
+                    type="text"
                     onChange={props.onChange}
                 />
                 <Button>Search</Button>

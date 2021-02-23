@@ -11,7 +11,7 @@ const app = () => {
     <div>
       <Layout>
         <Searchbar />
-        <Spinner />
+        {/* <Spinner /> */}
       </Layout>
     </div>
   );
