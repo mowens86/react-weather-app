@@ -6,7 +6,8 @@ const searchResults = props => {
 
     return (
         <div>
-            <p>{props.Lat}</p>
+            <p>{props.Description}</p>
+            <p>{props.Country}</p>
         </div>
     );
 };
