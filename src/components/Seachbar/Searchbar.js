@@ -55,21 +55,21 @@ const Searchbar = props => {
         console.log(data);
         weather = (
             <div>
-                    <SearchResults 
-                        key={searchKeys++}
-                        Lat={data.coord.lat}
-                        Lon={data.coord.lon}
-                        Description={data.weather[0].description}
-                        Temp={data.main.temp}
-                        FeelsLike={data.main.feels_like}
-                        Humidity={data.main.humidity}
-                        WindSpeed={data.wind.speed}
-                        WindDeg={data.wind.deg}
-                        WindGust={data.wind.gust}
-                        Country={data.sys.country}
-                        Sunrise={data.sys.sunrise}
-                        Sunset={data.sys.sunset}
-                    />
+                <SearchResults 
+                    key={searchKeys++}
+                    Lat={data.coord.lat}
+                    Lon={data.coord.lon}
+                    Description={data.weather[0].description}
+                    Temp={data.main.temp}
+                    FeelsLike={data.main.feels_like}
+                    Humidity={data.main.humidity}
+                    WindSpeed={data.wind.speed}
+                    WindDeg={data.wind.deg}
+                    WindGust={data.wind.gust}
+                    Country={data.sys.country}
+                    Sunrise={data.sys.sunrise}
+                    Sunset={data.sys.sunset}
+                />
             </div>
         );
     }
@@ -95,7 +95,7 @@ const Searchbar = props => {
                     </div>
                 </li>
             </ul>
-            {weather}
+            {!loading ? weather : weather = <Spinner />}
         </div>
     )
 };

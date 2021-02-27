@@ -5,7 +5,7 @@ const searchResults = props => {
 
 
     return (
-        <div>
+        <div className={classes.Card}>
             <p>{props.Description}</p>
             <p>{props.Country}</p>
         </div>
