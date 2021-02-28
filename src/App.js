@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from './components/hoc/Layout/Layout';
 import Searchbar from './components/Seachbar/Searchbar';
-import Spinner from './components/UI/Spinner/Spinner';
+import Footer from './components/Footer/Footer';
 
 
 const app = () => {
@@ -11,7 +11,7 @@ const app = () => {
     <div>
       <Layout>
         <Searchbar />
-        {/* <Spinner /> */}
+        <Footer />
       </Layout>
     </div>
   );

@@ -53,22 +53,23 @@ const Searchbar = props => {
     let weather;
     let tiltySpinner = (
         <Tilty>
-        <div className={classes.Container}>
-            <div className={classes.Card}>
-                <Spinner />
+            <div className={classes.Container}>
+                <div className={classes.Card}>
+                    <Spinner />
+                </div>
             </div>
-        </div>
-    </Tilty>
+        </Tilty>
     )
 
     if (data !== null) {
-        // console.log(data);
+        console.log(data);
         weather = (
             <Tilty>
                 <div className={classes.Container}>
                     <div className={classes.Card}>
                         <SearchResults 
                             key={searchKeys++}
+                            Name={data.name}
                             Lat={data.coord.lat}
                             Lon={data.coord.lon}
                             Description={data.weather[0].description}
@@ -92,9 +93,6 @@ const Searchbar = props => {
     return (
         <div>
             <ul className={classes.Searchbar}>
-                {/* <li>
-                    <Logo />
-                </li> */}
                 <li>
                     <form onSubmit={searchHandler}>
                         <Input
