@@ -4,6 +4,7 @@ import Logo from './Logo/Logo';
 import Input from './Input/Input';
 import ToggleCF from './ToggleCF/ToggleCF';
 import SearchResults from './SearchResults/SearchResults';
+import Tilty from 'react-tilty';
 import classes from './Searchbar.module.scss';
 import axios from 'axios';
 import Spinner from '../UI/Spinner/Spinner';
@@ -50,27 +51,40 @@ const Searchbar = props => {
 
     let searchKeys = 0;
     let weather;
+    let tiltySpinner = (
+        <Tilty>
+        <div className={classes.Container}>
+            <div className={classes.Card}>
+                <Spinner />
+            </div>
+        </div>
+    </Tilty>
+    )
 
     if (data !== null) {
-        console.log(data);
+        // console.log(data);
         weather = (
-            <div>
-                <SearchResults 
-                    key={searchKeys++}
-                    Lat={data.coord.lat}
-                    Lon={data.coord.lon}
-                    Description={data.weather[0].description}
-                    Temp={data.main.temp}
-                    FeelsLike={data.main.feels_like}
-                    Humidity={data.main.humidity}
-                    WindSpeed={data.wind.speed}
-                    WindDeg={data.wind.deg}
-                    WindGust={data.wind.gust}
-                    Country={data.sys.country}
-                    Sunrise={data.sys.sunrise}
-                    Sunset={data.sys.sunset}
-                />
-            </div>
+            <Tilty>
+                <div className={classes.Container}>
+                    <div className={classes.Card}>
+                        <SearchResults 
+                            key={searchKeys++}
+                            Lat={data.coord.lat}
+                            Lon={data.coord.lon}
+                            Description={data.weather[0].description}
+                            Temp={data.main.temp}
+                            FeelsLike={data.main.feels_like}
+                            Humidity={data.main.humidity}
+                            WindSpeed={data.wind.speed}
+                            WindDeg={data.wind.deg}
+                            WindGust={data.wind.gust}
+                            Country={data.sys.country}
+                            Sunrise={data.sys.sunrise}
+                            Sunset={data.sys.sunset}
+                        />
+                    </div>
+                </div>
+            </Tilty>
         );
     }
     
@@ -95,7 +109,7 @@ const Searchbar = props => {
                     </div>
                 </li>
             </ul>
-            {!loading ? weather : weather = <Spinner />}
+            {!loading ? weather : weather = tiltySpinner}
         </div>
     )
 };
