@@ -1,25 +1,29 @@
 import React, { useState, useEffect } from 'react';
 
-import Logo from './Logo/Logo';
+import { titleCase } from '../Helpers/Helpers';
 import Input from './Input/Input';
 import ToggleCF from './ToggleCF/ToggleCF';
 import SearchResults from './SearchResults/SearchResults';
 import Tilty from 'react-tilty';
-import classes from './Searchbar.module.scss';
-import axios from 'axios';
 import Spinner from '../UI/Spinner/Spinner';
+import axios from 'axios';
+import classes from './Searchbar.module.scss';
 
 const API_Key = process.env.REACT_APP_WEATHER_API_KEY;
 
 const Searchbar = props => {
-    const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState(false);
+    // States
+    const [ cityName, setCityName ] = useState('Los Angeles');
+    const [ lat, setLat ] = useState('');
+    const [ lon, setLon ] = useState('');
     const [ search, setSearch ] = useState('');
     const [ data, setData ] = useState(null); // Set to null initially lets the data be used conditionally
     const [ url, setUrl ] = useState(
-        `https://api.openweathermap.org/data/2.5/weather?q=los+angeles&appid=${API_Key}`
+        `https://api.openweathermap.org/data/2.5/weather?q=${titleCase(cityName)}&appid=${API_Key}`
         );
-        
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState(false);
+    
     useEffect(() => {
         const fetchData = async () => {
             setError(false);
@@ -27,8 +31,12 @@ const Searchbar = props => {
     
             try {
                 const result = await axios(url);
-                // console.log(result);
                 setData(result.data);
+                setUrl(
+                    `https://api.openweathermap.org/data/2.5/onecall?lat=${result.data.coord.lat}&lon=${result.data.coord.lon}&exclude=minutely,hourly&appid=${API_Key}`
+                    );
+                const newResult = await axios(url);
+                setData(newResult.data);
             } 
             
             catch (err) {
@@ -39,14 +47,14 @@ const Searchbar = props => {
         };
         
         fetchData();
-    
-    }, [url]);
+    }, [url]);     
 
     const searchHandler = (event) => {
         event.preventDefault();
         setUrl(
-            `https://api.openweathermap.org/data/2.5/weather?q=${search}&appid=${API_Key}`
+            `https://api.openweathermap.org/data/2.5/weather?q=${titleCase(search)}&appid=${API_Key}`
             );
+        setCityName(titleCase(search));
     };
 
     let searchKeys = 0;
@@ -64,24 +72,14 @@ const Searchbar = props => {
     if (data !== null) {
         console.log(data);
         weather = (
-            <Tilty>
+            <Tilty glare scale={1.03}>
                 <div className={classes.Container}>
                     <div className={classes.Card}>
                         <SearchResults 
                             key={searchKeys++}
-                            Name={data.name}
-                            Lat={data.coord.lat}
-                            Lon={data.coord.lon}
-                            Description={data.weather[0].description}
-                            Temp={data.main.temp}
-                            FeelsLike={data.main.feels_like}
-                            Humidity={data.main.humidity}
-                            WindSpeed={data.wind.speed}
-                            WindDeg={data.wind.deg}
-                            WindGust={data.wind.gust}
-                            Country={data.sys.country}
-                            Sunrise={data.sys.sunrise}
-                            Sunset={data.sys.sunset}
+                            Name={cityName.replace('+', ' ')}
+                            // Temp={data.current.temp}
+                            // FeelsLike={data.current.feels_like}
                         />
                     </div>
                 </div>

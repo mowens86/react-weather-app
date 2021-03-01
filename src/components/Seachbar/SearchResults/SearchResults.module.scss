@@ -1,15 +1,7 @@
 .Content {
     padding: 20px;
     text-align: center;
-    // transform: translateY(100px);
-    // opacity: 0;
-    transition: 0.5s;
-}
-
-.Content {
-    width: 100%;
-    transform: translateY(0px);
-    opacity: 1;
+    transform: translateZ(30px);
 }
 
 .ContentFlex {
@@ -27,9 +19,6 @@
 }
 
 .Content h2 {
-    // position: absolute;
-    // top: -80px;
-    // right: 30px;
     font-size: 4rem;
     
 }

@@ -1,4 +1,5 @@
 import React from 'react';
+import { celsiusConverter, fahrConverter } from '../../Helpers/Helpers';
 import classes from './SearchResults.module.scss';
 
 const searchResults = props => {

@@ -7,6 +7,12 @@
 
 .Input {
     padding: .5rem;
-    border-radius: 0.5rem 0 0 0.5rem;
+    border: 1px solid #000;
+    border-radius: 5px 0 0 5px;
     display: inline-block;
+}
+
+.Input:focus {
+    box-shadow: 0px 0px 2px #0066ff;
+    outline: none;
 }
