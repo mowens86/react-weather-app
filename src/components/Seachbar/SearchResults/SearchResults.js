@@ -1,15 +1,10 @@
 import React from 'react';
-import { celsiusConverter, fahrConverter } from '../../Helpers/Helpers';
 import classes from './SearchResults.module.scss';
 
 const searchResults = props => {
 
-    const celsius = Math.round(props.Temp - 273.15);
-    const fahrenheit = Math.round(((props.Temp - 273.15) * 1.8) + 32);
-    const feelCels = Math.round(props.FeelsLike - 273.1);
-    const feelFahr = Math.round(((props.FeelsLike - 273.15) * 1.8) + 32);
-
-
+    if(props.Alert) alert(props.Alert);
+    
 
     return (
         <div className={classes.Content}>
@@ -19,12 +14,9 @@ const searchResults = props => {
                 <p>{props.Description}</p>
             </div>
             <div >
-                <h2>{fahrenheit}°F</h2>
+                <h2>{props.Temp}°F</h2>
                 <div className={classes.ContentFlex}>
-                    <p>Feels like: {feelFahr}°F</p>
-                    {/* <p>Humidity: {props.Humidity}%</p>
-                    <p>{props.Country}</p>
-                    <p>{props.WindSpeed}</p> */}
+                    <p>Feels like: {props.FeelsLike}°F | Humidity: {props.Humidity}%</p>
                 </div>
             </div>
         </div>
