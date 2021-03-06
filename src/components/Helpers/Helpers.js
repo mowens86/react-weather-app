@@ -14,6 +14,15 @@ export const fahrConverter = (temp) => {
     return Math.round(((temp - 273.15) * 1.8) + 32);
 };
 
-export const convertObjToArray = () => {
-    
+export const convertObjToArray = (data, arr) => {
+    for (const [ key, value ] of Object.entries(data)) { 
+        arr.push({ [key]: value });
+    }
+};
+
+export const currentTime = () => {
+        const date = new Date();
+        return date.toLocaleTimeString();
+        // timeholder = date.getUTCMilliseconds();
+
 };

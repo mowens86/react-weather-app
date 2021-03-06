@@ -1,15 +1,16 @@
 .Button {
     padding: 0.5rem;
     border-radius: 0 5px 5px 0;
-    border: 1px solid #000;
+    border: 1px solid #FFF;
     display: inline-block;
     cursor: pointer;
     background-color: sandybrown;
     color: white;
     font-weight: bold;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.2s ease-in-out;
 
     &:hover {
-        background-color: orange;
+        background-color: #80E1FF;
+        color: #000;
     }
 }
