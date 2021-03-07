@@ -84,7 +84,7 @@ const Searchbar = props => {
     const weatherElementsArray = [];
     convertObjToArray(latLonData, weatherElementsArray); // Convert the latLonData into an array
 
-    console.log(weatherElementsArray && new Date().toLocaleTimeString());
+    console.log(weatherElementsArray);
     // If the weather elements array has data then...
     if (weatherElementsArray.length > 0) {
         weather = (
@@ -98,8 +98,7 @@ const Searchbar = props => {
                                 FeelsLike={fahrConverter(weatherElementsArray[4].current.feels_like)}
                                 Humidity={weatherElementsArray[4].current.humidity}
                                 Desc={weatherElementsArray[4].current.weather[0].main}
-                                // Time={weatherElementsArray[3].timezone_offset}
-                                Time={setInterval(new Date(), 1000)}
+                                Time={currentTime(weatherElementsArray[3].timezone_offset)}
                                 Alert={weatherElementsArray[6] ? weatherElementsArray[6].alerts[0].description : null}
                             />
                     </div>

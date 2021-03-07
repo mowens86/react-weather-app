@@ -5,7 +5,6 @@ import classes from './SearchResults.module.scss';
 const searchResults = props => {
 
     // if(props.Alert) alert(props.Alert); // This works but make a modal for it
-    
 
     return (
         <div className={classes.Content}>
