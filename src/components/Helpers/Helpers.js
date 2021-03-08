@@ -29,37 +29,54 @@ export const currentTime = (timezone) => {
 
     // Totals variables
     const totalCurrentUTCSeconds = secondsLeftFromUTCHours + secondsLeftFromUTCMinutes + secondsLeftFromUTC;
-    const getCurrentTimezoneSeconds = totalCurrentUTCSeconds + timezone; // timezone apssed from API is already a negative number so it needs to be added in order to subtract it in this specific case
+    const totalCurrentTimezoneSeconds = totalCurrentUTCSeconds + timezone; // timezone passed from API is already a negative number so it needs to be added in order to subtract it in this specific case
+
+    // Add zero function
+    const addZero = (val) => {
+        return val < 10 ? `0${val}` : val;
+    };
+    // 24-hour converter function
+    const hourConverter = (hour) => {
+        return hour > 12 ? hour = hour - 12 : hour;
+    };
+
+    
 
     // Conditionals to check seconds in day
-    if (getCurrentTimezoneSeconds < 0) {
+    if (totalCurrentTimezoneSeconds < 0) {
         // Since the seconds leftover is less than zero we need to use the total seconds in a day to get what's left over
         const totalSecondsInDay = 86400;
-        let leftOverSeconds = totalSecondsInDay - getCurrentTimezoneSeconds;
+        let leftoverSeconds = totalSecondsInDay + totalCurrentTimezoneSeconds; // timezone passed from API is already a negative number so it needs to be added in order to subtract it in this specific case
 
-        const getCurrentHours = leftOverSeconds - Math.floor((leftOverSeconds / 60) / 60);
-        leftOverSeconds = leftOverSeconds - (getCurrentHours * 60) * 60;
+        const rawHours = Math.floor((leftoverSeconds / 60) / 60);
+        leftoverSeconds = leftoverSeconds - (rawHours * 60) * 60;
 
-        const getCurrentMinutes = Math.floor(leftOverSeconds / 60);
-        leftOverSeconds = leftOverSeconds - (getCurrentMinutes * 60);
+        const rawMinutes = Math.floor(leftoverSeconds / 60);
+        leftoverSeconds = leftoverSeconds - (rawMinutes * 60);
 
-        const getCurrentSeconds = leftOverSeconds;
+        const hours = hourConverter(addZero(rawHours));
+        const minutes = addZero(rawMinutes);
+        // const seconds = addZero(leftoverSeconds);
 
-        return `${getCurrentHours}:${getCurrentMinutes}:${getCurrentSeconds}`;
+        // return `${hours}:${minutes}:${seconds} ${rawHours < 12 ? `AM` : `PM`}`; // With seconds
+        return `${hours}:${minutes} ${rawHours < 12 ? `AM` : `PM`}`; // Without seconds
         
     } 
     
     else {
-        let leftOverSeconds = getCurrentTimezoneSeconds;
+        let leftoverSeconds = totalCurrentTimezoneSeconds;
 
-        const getCurrentHours = Math.floor((leftOverSeconds / 60) / 60);
-        leftOverSeconds = leftOverSeconds - (getCurrentHours * 60) * 60;
+        const rawHours = Math.floor((leftoverSeconds / 60) / 60);
+        leftoverSeconds = leftoverSeconds - (rawHours * 60) * 60;
 
-        const getCurrentMinutes = Math.floor(leftOverSeconds / 60);
-        leftOverSeconds = leftOverSeconds - (getCurrentMinutes * 60);
+        const rawMinutes = Math.floor(leftoverSeconds / 60);
+        leftoverSeconds = leftoverSeconds - (rawMinutes * 60);
 
-        const getCurrentSeconds = leftOverSeconds;
+        const hours = hourConverter(rawHours);
+        const minutes = addZero(rawMinutes);
+        // const seconds = addZero(leftoverSeconds);
 
-        return `${getCurrentHours}:${getCurrentMinutes}:${getCurrentSeconds}`;
+        // return `${hours}:${minutes}:${seconds} ${rawHours < 12 ? `AM` : `PM`}`; // With seconds
+        return `${hours}:${minutes} ${rawHours < 12 ? `AM` : `PM`}`; // Without seconds
     }
 };

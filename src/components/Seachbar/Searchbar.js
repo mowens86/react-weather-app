@@ -40,6 +40,7 @@ const Searchbar = props => {
 
             catch (err) {
                 setError(true);
+                console.log(err);
             }
 
             setLoading(false);
@@ -61,6 +62,7 @@ const Searchbar = props => {
 
             catch (err) {
                 setError(true);
+                console.log(err);
             }
 
             setLoading(false);
@@ -84,7 +86,7 @@ const Searchbar = props => {
     const weatherElementsArray = [];
     convertObjToArray(latLonData, weatherElementsArray); // Convert the latLonData into an array
 
-    console.log(weatherElementsArray);
+    // console.log(weatherElementsArray);
     // If the weather elements array has data then...
     if (weatherElementsArray.length > 0) {
         weather = (
@@ -107,8 +109,20 @@ const Searchbar = props => {
         );
     }
 
+    // Error card
+    const errorSpinner = (
+        <Tilty>
+            <div className={classes.Container}>
+                <div className={classes.Card}>
+                    <Spinner />
+                    <p className={classes.Errmsg}>Sorry there was a problem with the city entered, please search again...</p>
+                </div>
+            </div>
+        </Tilty>        
+    )
+
     // Spinner to be used when data is being fetched
-    let tiltySpinner = (
+    const tiltySpinner = (
         <Tilty>
             <div className={classes.Container}>
                 <div className={classes.Card}>
@@ -117,6 +131,9 @@ const Searchbar = props => {
             </div>
         </Tilty>
     )
+
+    if (error) weather = errorSpinner;
+    if (loading) weather = tiltySpinner;
 
     return (
         <div>
@@ -135,7 +152,7 @@ const Searchbar = props => {
                     </div>
                 </li>
             </ul>
-            {!loading ? weather : weather = tiltySpinner}
+            {weather}
         </div>
     )
 };
