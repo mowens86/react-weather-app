@@ -9,8 +9,8 @@ const searchResults = props => {
     return (
         <div className={classes.Content}>
             <div className={classes.ImgBox}>
-                {/* <img src={} /> */}
-                <h4>{props.Name}</h4>
+                <img src={props.Icon} alt={`${props.Desc} icon`} />
+                <h4>{props.Name}, {props.Country}</h4>
                 <p>{props.Desc} | {props.Time}</p>
             </div>
             <div>

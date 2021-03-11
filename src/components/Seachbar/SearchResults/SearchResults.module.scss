@@ -1,5 +1,4 @@
 .Content {
-    padding: 20px;
     text-align: center;
     transform: translateZ(30px);
 }
@@ -16,6 +15,7 @@
 .Content h4,
 .Content p {
     color: rgba(0, 0, 0, 1);
+    margin: 0;
 }
 
 .Content h2 {

@@ -1,4 +1,5 @@
 import React from 'react';
+import classes from './Footer.module.scss';
 
 const footer = () => {
 
@@ -6,7 +7,7 @@ const footer = () => {
 
     return (
         <footer>
-            <div>
+            <div className={classes.Footer}>
                 <p>© {year}, This app was built with React by Michael Owens. Data powered by Open Weather API.</p>
             </div>
         </footer>

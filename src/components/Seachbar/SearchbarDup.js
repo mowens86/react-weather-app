@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { titleCase, fahrConverter, convertObjToArray, currentTime, weatherIcon } from '../Helpers/Helpers';
+import { titleCase, fahrConverter, convertObjToArray, currentTime } from '../Helpers/Helpers';
 import Input from './Input/Input';
 import ToggleCF from './ToggleCF/ToggleCF';
 import SearchResults from './SearchResults/SearchResults';
@@ -14,8 +14,11 @@ const API_Key = process.env.REACT_APP_WEATHER_API_KEY;
 const Searchbar = props => {
     // States
     const [ cityName, setCityName ] = useState('Los Angeles');
+    const [ lat, setLat ] = useState(34.0522);
+    const [ lon, setLon ] = useState(-118.2437);
     const [ search, setSearch ] = useState('');
     const [ cityData, setCityData ] = useState([]);
+    const [ latLonData, setLatLonData ] = useState([]);
     const [ timezoneOffset, setTimezoneOffset ] = useState(null);
     const [ url, setUrl ] = useState(
         `https://api.openweathermap.org/data/2.5/weather?q=${titleCase(cityName)}&appid=${API_Key}`
@@ -32,7 +35,8 @@ const Searchbar = props => {
             try {
                 const cityDataResult = await axios(url);
                 setCityData(cityDataResult.data);
-                setTimezoneOffset(cityDataResult.data.timezone);
+                setLat(cityDataResult.data.coord.lat);
+                setLon(cityDataResult.data.coord.lon); 
             } 
 
             catch (err) {
@@ -45,6 +49,29 @@ const Searchbar = props => {
         
         fetchCityData();
     }, [url]);
+
+    // Fetch weather data by longitude and latitude from the weather data by city
+    useEffect(() => {
+        const fetchLatLonData = async () => {
+            setError(false);
+            setLoading(true);
+
+            try {
+                const latLonDataResult = await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=minutely,hourly&appid=${API_Key}`);
+                setLatLonData(latLonDataResult.data);
+                setTimezoneOffset(latLonDataResult.data.timezone_offset);
+            } 
+
+            catch (err) {
+                setError(true);
+                console.log(err);
+            }
+
+            setLoading(false);
+        };
+        
+        fetchLatLonData();
+    }, [lat, lon]);
     
     // Handle event when search button is clicked
     const searchHandler = (event) => {
@@ -59,9 +86,9 @@ const Searchbar = props => {
     let searchKeys = 0;
     let weather;
     const weatherElementsArray = [];
-    convertObjToArray(cityData, weatherElementsArray); // Convert the latLonData into an array
+    convertObjToArray(latLonData, weatherElementsArray); // Convert the latLonData into an array
 
-    console.log(weatherElementsArray);
+    console.log(timezoneOffset);
     // If the weather elements array has data then...
     if (weatherElementsArray.length > 0) { // As of 3/7/2021, the data being gathered sometimes is a little buggy and the timezone keeps the previous timezone. Need figure out the bug to update properly.
         weather = (
@@ -71,13 +98,12 @@ const Searchbar = props => {
                         <SearchResults 
                             key={searchKeys++}
                             Name={cityName.replace('+', ' ')}
-                            Temp={fahrConverter(weatherElementsArray[3].main.temp)}
-                            FeelsLike={fahrConverter(weatherElementsArray[3].main.feels_like)}
-                            Humidity={weatherElementsArray[3].main.humidity}
-                            Desc={weatherElementsArray[1].weather[0].main}
+                            Temp={fahrConverter(weatherElementsArray[4].current.temp)}
+                            FeelsLike={fahrConverter(weatherElementsArray[4].current.feels_like)}
+                            Humidity={weatherElementsArray[4].current.humidity}
+                            Desc={weatherElementsArray[4].current.weather[0].main}
                             Time={currentTime(timezoneOffset)}
-                            Country={weatherElementsArray[8].sys.country}
-                            Icon={weatherIcon(weatherElementsArray[1].weather[0].icon)}
+                            Alert={weatherElementsArray[6] ? weatherElementsArray[6].alerts[0].description : null}
                         />
                     </div>
                 </div>

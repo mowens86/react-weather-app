@@ -20,7 +20,7 @@ export const convertObjToArray = (data, arr) => {
     }
 };
 
-export const currentTime = (timezone) => {
+export const currentTime = (timezoneOffset) => {
     // UTC varibales
     const date = new Date();
     const secondsLeftFromUTCHours = date.getUTCHours() * 60 * 60;
@@ -29,7 +29,7 @@ export const currentTime = (timezone) => {
 
     // Totals variables
     const totalCurrentUTCSeconds = secondsLeftFromUTCHours + secondsLeftFromUTCMinutes + secondsLeftFromUTC;
-    const totalCurrentTimezoneSeconds = totalCurrentUTCSeconds + timezone; // timezone passed from API is already a negative number so it needs to be added in order to subtract it in this specific case
+    const totalCurrentTimezoneSeconds = totalCurrentUTCSeconds + timezoneOffset; // timezone passed from API is already a negative number so it needs to be added in order to subtract it in this specific case
 
     // Add zero function
     const addZero = (val) => {
@@ -39,8 +39,6 @@ export const currentTime = (timezone) => {
     const hourConverter = (hour) => {
         return hour > 12 ? hour = hour - 12 : hour;
     };
-
-    
 
     // Conditionals to check seconds in day
     if (totalCurrentTimezoneSeconds < 0) {
@@ -79,4 +77,8 @@ export const currentTime = (timezone) => {
         // return `${hours}:${minutes}:${seconds} ${rawHours < 12 ? `AM` : `PM`}`; // With seconds
         return `${hours}:${minutes} ${rawHours < 12 ? `AM` : `PM`}`; // Without seconds
     }
+};
+
+export const weatherIcon = (iconData) => {
+    return `http://openweathermap.org/img/wn/${iconData}@2x.png`
 };
