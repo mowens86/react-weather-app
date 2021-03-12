@@ -63,7 +63,7 @@ const Searchbar = props => {
 
     console.log(weatherElementsArray);
     // If the weather elements array has data then...
-    if (weatherElementsArray.length > 0) { // As of 3/7/2021, the data being gathered sometimes is a little buggy and the timezone keeps the previous timezone. Need figure out the bug to update properly.
+    if (weatherElementsArray.length > 0) {
         weather = (
             <Tilty glare scale={1.03}>
                 <div className={classes.Container}>
@@ -76,7 +76,7 @@ const Searchbar = props => {
                             Humidity={weatherElementsArray[3].main.humidity}
                             Desc={weatherElementsArray[1].weather[0].main}
                             Time={currentTime(timezoneOffset)}
-                            Country={weatherElementsArray[8].sys.country}
+                            Country={weatherElementsArray[8].sys.country} // On arrays with a length of 14 this would be on 9 not 8...need a fix for this
                             Icon={weatherIcon(weatherElementsArray[1].weather[0].icon)}
                         />
                     </div>
@@ -91,7 +91,7 @@ const Searchbar = props => {
             <div className={classes.Container}>
                 <div className={classes.Card}>
                     <Spinner />
-                    <p className={classes.Errmsg}>Sorry there was a problem with the city entered, the city might not be found in the API's data or the city name is wrong. Please try again...</p>
+                    <p className={classes.Errmsg}>Sorry there was a problem with the city entered, the city might not be found in the API's database or the city name is wrong. Please try again...</p>
                 </div>
             </div>
         </Tilty>        
