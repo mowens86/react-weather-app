@@ -16,12 +16,13 @@ const Searchbar = props => {
     const [ cityName, setCityName ] = useState('Los Angeles');
     const [ search, setSearch ] = useState('');
     const [ cityData, setCityData ] = useState([]);
+    const [ tempUnit, setTempUnit ] = useState('F');
     const [ timezoneOffset, setTimezoneOffset ] = useState(null);
+    const [ loading, setLoading ] = useState(false);
+    const [ error, setError ] = useState(false);
     const [ url, setUrl ] = useState(
         `https://api.openweathermap.org/data/2.5/weather?q=${titleCase(cityName)}&appid=${API_Key}`
         );
-    const [ loading, setLoading ] = useState(false);
-    const [ error, setError ] = useState(false);
 
     // Fetch weather data by city
     useEffect(() => {
@@ -61,9 +62,9 @@ const Searchbar = props => {
     const weatherElementsArray = [];
     convertObjToArray(cityData, weatherElementsArray); // Convert the latLonData into an array
 
-    console.log(weatherElementsArray);
+    // console.log(weatherElementsArray);
     // If the weather elements array has data then...
-    if (weatherElementsArray.length > 0) {
+    if (weatherElementsArray.length === 13 || weatherElementsArray.length === 14) {
         weather = (
             <Tilty glare scale={1.03}>
                 <div className={classes.Container}>
@@ -76,7 +77,7 @@ const Searchbar = props => {
                             Humidity={weatherElementsArray[3].main.humidity}
                             Desc={weatherElementsArray[1].weather[0].main}
                             Time={currentTime(timezoneOffset)}
-                            Country={weatherElementsArray[8].sys.country} // On arrays with a length of 14 this would be on 9 not 8...need a fix for this
+                            Country={weatherElementsArray.length === 13 ? weatherElementsArray[8].sys.country : weatherElementsArray[9].sys.country}
                             Icon={weatherIcon(weatherElementsArray[1].weather[0].icon)}
                         />
                     </div>

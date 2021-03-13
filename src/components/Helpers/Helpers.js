@@ -21,7 +21,7 @@ export const convertObjToArray = (data, arr) => {
 };
 
 export const currentTime = (timezoneOffset) => {
-    // UTC varibales
+    // UTC variables
     const date = new Date();
     const secondsLeftFromUTCHours = date.getUTCHours() * 60 * 60;
     const secondsLeftFromUTCMinutes = date.getUTCMinutes() * 60;
@@ -82,3 +82,4 @@ export const currentTime = (timezoneOffset) => {
 export const weatherIcon = (iconData) => {
     return `http://openweathermap.org/img/wn/${iconData}@2x.png`
 };
+

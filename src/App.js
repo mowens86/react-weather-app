@@ -8,12 +8,10 @@ import Footer from './components/Footer/Footer';
 const app = () => {
 
   return (
-    <div>
       <Layout>
         <Searchbar />
         <Footer />
       </Layout>
-    </div>
   );
 }
 
