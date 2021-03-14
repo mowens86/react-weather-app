@@ -5,7 +5,7 @@ const toggle = props => {
 
     return (
         <label className={classes.Switch}>
-            <input type="checkbox" onClick={props.clickHandler}/>
+            <input type="checkbox" onClick={props.toggleSwitch}/>
             <span className={`${classes.Slider} ${classes.Round}`}></span>
         </label>
     )
