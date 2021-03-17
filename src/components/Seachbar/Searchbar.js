@@ -109,11 +109,6 @@ const Searchbar = props => {
         </Tilty>
     )
 
-    // Click handler
-    const toggleHandler = () => {
-        console.log("do something");
-    }
-
     if (error) weather = errorSpinner;
     if (loading) weather = tiltySpinner;
 
@@ -128,11 +123,11 @@ const Searchbar = props => {
                         />
                     </form>
                 </li>
-                <li>
+                {/* <li>
                     <div className={classes.ToggleWrapper}>
-                        C <ToggleCF toggleSwitch={toggleHandler} /> F
+                        C <ToggleCF /> F
                     </div>
-                </li>
+                </li> */}
             </ul>
             {weather}
         </div>
